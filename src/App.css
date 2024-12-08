@@ -1,0 +1,7 @@
+.App {
+  background-color: rgb(35, 35, 35);
+  height: 100vh;
+  padding: 2rem;
+  overflow: hidden;
+  color: azure;
+}
