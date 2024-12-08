@@ -6,6 +6,7 @@ import addFileIcon from "../asset/add-file.png";
 import newFolderIcon from "../asset/new-folder.png";
 import addIcons from "../asset/add.png";
 import deleteIcon from "../asset/delete.png";
+import cancelIcon from "../asset/cancel.png";
 export const FileExplorer = ({ data, level = 0 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [newItemName, setNewItemName] = useState("");
@@ -122,7 +123,7 @@ export const FileExplorer = ({ data, level = 0 }) => {
               <button onClick={() => setShowInput(false)} className="buttons">
                 {" "}
                 <img
-                  src={deleteIcon}
+                  src={cancelIcon}
                   alt="cancel"
                   style={{ width: "16px", height: "16px" }}
                 />
