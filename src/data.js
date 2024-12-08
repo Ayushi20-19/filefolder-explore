@@ -1,73 +1,79 @@
-export const data = [
+export const initialData = [
   {
-    id: 1,
-    name: "README.md", // This is a file.
+    id: 0,
+    name: "Root",
     children: [
       {
-        id: 3,
-        name: "00000.doc", // This is a file inside the Documents folder.
-      },
-      {
-        id: 8,
-        name: "test1.txt",
+        id: 1,
+        name: "src", // This is a folder.
         children: [
           {
-            id: 8,
-            name: "test1.txt", // File inside Misc folder.
+            id: 2,
+            name: "test.doc", // This is a file inside the src folder.
+          },
+          {
+            id: 3,
+            name: "foldertest.txt", // This is a folder inside the src folder.
+            children: [
+              {
+                id: 4,
+                name: "fileTest.txt", // This is a file inside the foldertest folder.
+              },
+            ],
           },
         ],
       },
-    ],
-  },
-  {
-    id: 2,
-    name: "Documents", // This is a folder with children.
-    children: [
       {
-        id: 3,
-        name: "Word.doc", // This is a file inside the Documents folder.
-      },
-      {
-        id: 4,
-        name: "o.ppt", // Another file inside Documents.
-      },
-    ],
-  },
-  {
-    id: 5,
-    name: "Downloads", // This is another folder with its own children.
-    children: [
-      {
-        id: 6,
-        name: "hello.txt", // A file inside Downloads.
-      },
-      {
-        id: 7,
-        name: "Misc", // This is a subfolder inside Downloads.
+        id: 5,
+        name: "Documents", // This is a folder with children.
         children: [
           {
-            id: 8,
-            name: "test1.txt", // File inside Misc folder.
+            id: 6,
+            name: "Word.doc", // This is a file inside the Documents folder.
           },
           {
+            id: 7,
+            name: "test.ppt", // Another file inside Documents.
+          },
+        ],
+      },
+      {
+        id: 8,
+        name: "Downloads",
+        children: [
+          {
             id: 9,
-            name: "test2.txt", // Another file inside Misc.
+            name: "hello.txt",
+          },
+          {
+            id: 10,
+            name: "Misc",
             children: [
               {
-                id: 8,
-                name: "test1.txt", // File inside Misc folder.
+                id: 11,
+                name: "test1.txt",
               },
               {
-                id: 9,
-                name: "test2.txt", // Another file inside Misc.
+                id: 12,
+                name: "test2.txt",
                 children: [
                   {
-                    id: 8,
-                    name: "test1.txt", // File inside Misc folder.
+                    id: 13,
+                    name: "test11.txt",
                   },
                   {
-                    id: 9,
-                    name: "test2.txt", // Another file inside Misc.
+                    id: 14,
+                    name: "test22.txt",
+                    children: [
+                      {
+                        id: 15,
+                        name: "test111.txt",
+                      },
+                      {
+                        id: 16,
+                        name: "test222.txt",
+                      },
+                    ],
                   },
                 ],
               },

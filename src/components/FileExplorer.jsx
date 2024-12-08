@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import fileIcon from "../asset/file.png";
-import downArrowIcon from "../asset/down-arrow.png";
-import rightArrowIcon from "../asset/right-arrow.png";
-import addFileIcon from "../asset/add-file.png";
-import newFolderIcon from "../asset/new-folder.png";
-import addIcons from "../asset/add.png";
-import deleteIcon from "../asset/delete.png";
-import cancelIcon from "../asset/cancel.png";
-export const FileExplorer = ({ data, level = 0 }) => {
+import { HiChevronDown, HiChevronRight } from "react-icons/hi";
+import { RiFileAddLine, RiFolderAddLine } from "react-icons/ri";
+import { FiFileText } from "react-icons/fi";
+import { IoMdAdd } from "react-icons/io";
+import { RxCross2 } from "react-icons/rx";
+import { RiDeleteBin5Line } from "react-icons/ri";
+
+export const FileExplorer = ({ data, level = 0, onDelete }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [newItemName, setNewItemName] = useState("");
   const [showInput, setShowInput] = useState(false);
@@ -65,78 +64,93 @@ export const FileExplorer = ({ data, level = 0 }) => {
 
   return (
     <>
-      <ol style={{ paddingLeft: `${level * 20}px` }}>
-        <li>
-          <span onClick={handleClick}>
-            {isFolder ? (
-              <img
-                src={isExpanded ? downArrowIcon : rightArrowIcon}
-                alt="Folder Icon"
-                style={{ marginRight: "5px", height: "20px", width: "20px" }}
-              />
-            ) : (
-              <img
-                src={fileIcon}
-                alt="File Icon"
-                style={{ marginRight: "5px", height: "20px", width: "20px" }}
-              />
-            )}
-            {isFolder ? (
-              <span className="folder">
-                {data.name}
-                <button onClick={handleAddFile} className="buttons">
-                  <img
-                    src={addFileIcon}
-                    alt="Add File Icon"
-                    style={{ width: "16px", height: "16px" }}
-                  />
-                </button>
-                <button onClick={handleAddFolder} className="buttons">
-                  <img
-                    src={newFolderIcon}
-                    alt="New Folder Icon"
-                    style={{ width: "16px", height: "16px" }}
-                  />
-                </button>
-              </span>
-            ) : (
-              <span className="file">{data.name}</span>
-            )}
-          </span>
-          {showInput && (
-            <div>
-              <input
-                className="input"
-                type="text"
-                value={newItemName}
-                onChange={(e) => setNewItemName(e.target.value)}
-                placeholder="Enter new item name"
-              />
-              <button onClick={handleAddItem} className="buttons">
-                {" "}
-                <img
-                  src={addIcons}
-                  alt="Add"
-                  style={{ width: "16px", height: "16px" }}
+      <div className="sidebar">
+        <ol style={{ paddingLeft: `${level * 20}px` }}>
+          <li>
+            <span className="item" onClick={handleClick}>
+              {isFolder ? (
+                isExpanded ? (
+                  <HiChevronDown />
+                ) : (
+                  <HiChevronRight />
+                )
+              ) : (
+                <FiFileText />
+              )}
+              {isFolder ? (
+                <span
+                  className="folder"
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  {data.name}
+                  <span className="buttonsWrapper">
+                    <button onClick={handleAddFile} className="buttons">
+                      <RiFileAddLine />
+                      <span className="tooltip">Add File</span>
+                    </button>
+                    <button onClick={handleAddFolder} className="buttons">
+                      <RiFolderAddLine />
+                      <span className="tooltip">Add Folder</span>
+                    </button>
+                    <button
+                      onClick={() => onDelete(data.id)}
+                      className="buttons"
+                    >
+                      <RiDeleteBin5Line />
+                      <span className="tooltip">Delete</span>
+                    </button>
+                  </span>
+                </span>
+              ) : (
+                <span className="file">
+                  {data.name}
+                  <button onClick={() => onDelete(data.id)} className="buttons">
+                    <RiDeleteBin5Line />
+                  </button>
+                </span>
+              )}
+            </span>
+            {showInput && (
+              <div className="inputWrapper">
+                <input
+                  className="input"
+                  type="text"
+                  value={newItemName}
+                  onChange={(e) => setNewItemName(e.target.value)}
+                  placeholder="Enter new item name"
                 />
-              </button>
-              <button onClick={() => setShowInput(false)} className="buttons">
-                {" "}
-                <img
-                  src={cancelIcon}
-                  alt="cancel"
-                  style={{ width: "16px", height: "16px" }}
-                />
-              </button>
-            </div>
-          )}
-        </li>
-      </ol>
-      {isExpanded &&
-        data.children &&
-        data.children.map((child) => (
-          <FileExplorer data={child} level={level + 1} />
-        ))}
+                <div className="">
+                  <button
+                    onClick={handleAddItem}
+                    className="buttons"
+                    tooltip="Add"
+                  >
+                    <IoMdAdd />
+                    <span className="tooltip">Save</span>
+                  </button>
+                  <button
+                    onClick={() => setShowInput(false)}
+                    className="buttons"
+                  >
+                    <RxCross2 />
+                    <span className="tooltip">Cancel</span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </li>
+        </ol>
+        {isExpanded &&
+          data.children &&
+          data.children.map((child) => (
+            <FileExplorer
+              key={child.id}
+              data={child}
+              level={level + 1}
+              onDelete={onDelete}
+            />
+          ))}
+      </div>
     </>
   );
 };

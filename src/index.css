@@ -1,10 +1,20 @@
 .folder {
   font-weight: bold;
   color: #00698f;
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
 }
-
+.folder:hover {
+  cursor: pointer;
+  background-color: #454545;
+  opacity: 0.8;
+  border-radius: 3%;
+}
 .file {
   color: #eaeaea;
+  margin-left: 2px;
+  margin-bottom: 2px;
 }
 
 ol {
@@ -19,11 +29,12 @@ body {
 }
 
 .buttons {
+  position: relative;
   background-color: transparent;
   color: #bdbdbd;
   border: none;
-  padding: 5px;
-  font-size: 14px;
+  padding: 1px 5px;
+  font-size: 16px;
   cursor: pointer;
   border-radius: 5px;
 }
@@ -35,6 +46,7 @@ body {
 .buttons img {
   width: 16px;
   height: 16px;
+  color: #fff;
 }
 
 .input {
@@ -46,10 +58,46 @@ body {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
   font-size: 14px;
   font-family: Arial, sans-serif;
+  margin-left: 2px;
 }
 .input:focus {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
 }
 .input::placeholder {
   color: #666;
+}
+.tooltip {
+  visibility: hidden;
+  width: 90px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  bottom: 110%;
+  left: 0%;
+  margin-left: -40px;
+  opacity: 0;
+  font-size: 14px;
+  transition: opacity 0.3s;
+}
+
+.buttons:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.item {
+  display: flex;
+  width: 350px;
+}
+
+.sidebar {
+  width: 350px;
+}
+
+.inputWrapper {
+  display: flex;
 }
