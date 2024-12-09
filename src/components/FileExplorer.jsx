@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { HiChevronDown, HiChevronRight } from "react-icons/hi";
-import { RiFileAddLine, RiFolderAddLine } from "react-icons/ri";
+import {
+  RiFileAddLine,
+  RiFolderAddLine,
+  RiDeleteBin5Line,
+} from "react-icons/ri";
 import { FiFileText } from "react-icons/fi";
 import { IoMdAdd } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
-import { RiDeleteBin5Line } from "react-icons/ri";
+import { FaRegEdit } from "react-icons/fa";
+import "./fileExplorer.css";
 
 export const FileExplorer = ({ data, level = 0, onDelete }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [newItemName, setNewItemName] = useState("");
   const [showInput, setShowInput] = useState(false);
   const [selectedType, setSelectedType] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedName, setEditedName] = useState(data.name);
+  const inputRef = useRef(null);
 
   const handleAddItem = () => {
     if (selectedType === "file") {
@@ -60,6 +68,22 @@ export const FileExplorer = ({ data, level = 0, onDelete }) => {
     setSelectedType("folder");
   };
 
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleEditKeyPress = (e) => {
+    if (e.key === "Enter") {
+      data.name = editedName; // Update the data with the new name
+      setIsEditing(false);
+    }
+  };
+
+  const handleBlur = () => {
+    setIsEditing(false);
+    setShowInput(false);
+  };
+
   const isFolder = data.children !== undefined;
 
   return (
@@ -82,7 +106,20 @@ export const FileExplorer = ({ data, level = 0, onDelete }) => {
                   className="folder"
                   style={{ display: "flex", justifyContent: "space-between" }}
                 >
-                  {data.name}
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      ref={inputRef}
+                      value={editedName}
+                      onChange={(e) => setEditedName(e.target.value)}
+                      onKeyDown={handleEditKeyPress}
+                      onBlur={handleBlur} // Close editing on blur
+                      className="input"
+                      autoFocus
+                    />
+                  ) : (
+                    data.name
+                  )}
                   <span className="buttonsWrapper">
                     <button onClick={handleAddFile} className="buttons">
                       <RiFileAddLine />
@@ -91,6 +128,10 @@ export const FileExplorer = ({ data, level = 0, onDelete }) => {
                     <button onClick={handleAddFolder} className="buttons">
                       <RiFolderAddLine />
                       <span className="tooltip">Add Folder</span>
+                    </button>
+                    <button onClick={handleEdit} className="buttons">
+                      <FaRegEdit />
+                      <span className="tooltip">Edit</span>
                     </button>
                     <button
                       onClick={() => onDelete(data.id)}
@@ -103,9 +144,27 @@ export const FileExplorer = ({ data, level = 0, onDelete }) => {
                 </span>
               ) : (
                 <span className="file">
-                  {data.name}
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      ref={inputRef}
+                      value={editedName}
+                      onChange={(e) => setEditedName(e.target.value)}
+                      onKeyDown={handleEditKeyPress}
+                      onBlur={handleBlur} // Close editing on blur
+                      className="input"
+                      autoFocus
+                    />
+                  ) : (
+                    data.name
+                  )}
+                  <button onClick={handleEdit} className="buttons">
+                    <FaRegEdit />
+                    <span className="tooltip">Edit</span>
+                  </button>
                   <button onClick={() => onDelete(data.id)} className="buttons">
                     <RiDeleteBin5Line />
+                    <span className="tooltip">Delete</span>
                   </button>
                 </span>
               )}
@@ -119,7 +178,7 @@ export const FileExplorer = ({ data, level = 0, onDelete }) => {
                   onChange={(e) => setNewItemName(e.target.value)}
                   placeholder="Enter new item name"
                 />
-                <div className="">
+                <div>
                   <button
                     onClick={handleAddItem}
                     className="buttons"
