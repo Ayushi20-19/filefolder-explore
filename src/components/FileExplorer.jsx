@@ -34,22 +34,9 @@ export const FileExplorer = ({ data, level = 0, onDelete }) => {
         children: [],
       };
       data.children.push(newFolder);
-      updateParentFolder(data);
     }
     setNewItemName("");
     setShowInput(false);
-  };
-
-  const updateParentFolder = (folder) => {
-    if (folder.parent) {
-      const parentIndex = folder.parent.children.findIndex(
-        (child) => child.id === folder.id
-      );
-      if (parentIndex !== -1) {
-        folder.parent.children[parentIndex] = folder;
-        updateParentFolder(folder.parent);
-      }
-    }
   };
 
   const handleClick = () => {
@@ -188,7 +175,10 @@ export const FileExplorer = ({ data, level = 0, onDelete }) => {
                     <span className="tooltip">Save</span>
                   </button>
                   <button
-                    onClick={() => setShowInput(false)}
+                    onClick={() => {
+                      setShowInput(false);
+                      setNewItemName("");
+                    }}
                     className="buttons"
                   >
                     <RxCross2 />

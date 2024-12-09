@@ -41,6 +41,9 @@ function App() {
       {data?.map((data) => (
         <FileExplorer key={data.id} data={data} onDelete={handleDelete} />
       ))}
+      <footer className="footer">
+        <p>&copy; 2024 File Explorer. @Ayushi20-19</p>
+      </footer>
     </div>
   );
 }
